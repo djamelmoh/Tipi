@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prendre rendez-vous</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/rendez_vous.css">
+  <script src="js/script.js"></script>
+  <script src="js/terra-chatbot.js"></script>
+  <script src="js/terra-chatbot-loader.js"></script>
+
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- EmailJS pour l'envoi d'emails -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      // Remplacez "YOUR_PUBLIC_KEY" par votre clé publique EmailJS
+      emailjs.init("3YA9LF1oSq-1cPoqz");
+    })();
+  </script>
+</head>
+<body>
+<!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">TERRA</a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html" class="active">Accueil</a></li>
+                        <li><a href="a_propos.html">À propos</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="cas.html">Cas d'usage</a></li>
+                        <li><a href="contact.html" class="btn btn-primary">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <section class="page-hero">
+        <div class="container">
+			<h1>Prendre rendez-vous</h1>
+			<p>Réservez un créneau d'une heure avec l'un de nos conseillers</p>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <div id="booking-form" class="card">
+      <form id="appointment-form">
+        <div class="grid grid-cols-2">
+          <div>
+            <h2 class="mb-4">Vos informations</h2>
+            <div class="grid grid-cols-2">
+              <div class="form-group">
+                <label for="firstName">Prénom</label>
+                <input type="text" id="firstName" name="firstName">
+                <div id="firstName-error" class="error-message"></div>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Nom</label>
+                <input type="text" id="lastName" name="lastName">
+                <div id="lastName-error" class="error-message"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email">
+              <div id="email-error" class="error-message"></div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Téléphone</label>
+              <input type="tel" id="phone" name="phone">
+              <div id="phone-error" class="error-message"></div>
+            </div>
+			 
+			<div class="form-group">
+                <label for="message">Description</label>
+                <textarea id="message" name="message" placeholder="Décrivez votre projet ou votre demande..."></textarea>
+                <div id="message-error" class="error-message"></div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="mb-4">Date et heure</h2>
+            <div class="form-group">
+              <label>Sélectionnez une date</label>
+              <div id="calendar" class="calendar">
+                <div class="calendar-header">
+                  <div class="calendar-title" id="calendar-title">Mars 2025</div>
+                  <div class="calendar-nav">
+                    <button type="button" id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" id="next-month"><i class="fas fa-chevron-right"></i></button>
+                  </div>
+                </div>
+                <div class="calendar-grid" id="calendar-days-header">
+                  <div class="calendar-day-header">Lun</div>
+                  <div class="calendar-day-header">Mar</div>
+                  <div class="calendar-day-header">Mer</div>
+                  <div class="calendar-day-header">Jeu</div>
+                  <div class="calendar-day-header">Ven</div>
+                  <div class="calendar-day-header">Sam</div>
+                  <div class="calendar-day-header">Dim</div>
+                </div>
+                <div class="calendar-grid" id="calendar-days"></div>
+              </div>
+              <div id="date-error" class="error-message"></div>
+            </div>
+            <div class="form-group">
+              <label for="time">Sélectionnez une heure</label>
+              <select id="time" name="time">
+                <option value="">Choisir un créneau horaire</option>
+                <option value="9:00 - 10:00">9:00 - 10:00</option>
+                <option value="10:00 - 11:00">10:00 - 11:00</option>
+                <option value="11:00 - 12:00">11:00 - 12:00</option>
+                <option value="13:00 - 14:00">13:00 - 14:00</option>
+                <option value="14:00 - 15:00">14:00 - 15:00</option>
+                <option value="15:00 - 16:00">15:00 - 16:00</option>
+                <option value="16:00 - 17:00">16:00 - 17:00</option>
+                <option value="17:00 - 18:00">17:00 - 18:00</option>
+              </select>
+              <div id="time-error" class="error-message"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <button type="submit" class="btn btn-primary btn-block">Confirmer le rendez-vous</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success Message (Hidden by default) -->
+    <div id="success-message" class="card text-center hidden">
+      <div class="success-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <h2>Rendez-vous confirmé !</h2>
+      <p class="text-muted mb-6" id="confirmation-details">
+        Nous avons bien reçu votre demande de rendez-vous.
+        Un email de confirmation a été envoyé à votre adresse email.
+      </p>
+      <button type="button" id="new-appointment" class="btn btn-outline">Prendre un autre rendez-vous</button>
+    </div>
+
+	<!-- Terra Chatbot Integration -->
+	<div id="terra-chatbot-container">
+		<link rel="stylesheet" href="styles/terra-chatbot.css">
+			<script>
+				document.addEventListener('DOMContentLoaded', function() {
+				new TerraChatbot('terra-chatbot-container');
+				});
+			</script>
+	</div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">
+						<a href="index.html"> TERRA <img src="image/logo.png" alt="Logo TERRA" class="logo-img"></a>
+                    </div>
+                    <p>Vos territoires, notre expertise, nos actions responsables</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="a_propos.html">À propos</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="cas.html">Cas d'usage</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="services.html#analyse">Analyse & Conseil</a></li>
+                        <li><a href="services.html#lancement">Lancement de Projet</a></li>
+                        <li><a href="services.html#execution">Équipe d'Exécution</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Paris, France</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:terra-expertise@outlook.fr">terra-expertise@outlook.fr</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> TERRA. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // DOM Elements
+    const appointmentForm = document.getElementById('appointment-form');
+    const bookingForm = document.getElementById('booking-form');
+    const successMessage = document.getElementById('success-message');
+    const newAppointmentBtn = document.getElementById('new-appointment');
+    const confirmationDetails = document.getElementById('confirmation-details');
+    
+    // Form fields
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const messageInput = document.getElementById('message');
+    const timeSelect = document.getElementById('time');
+    const calendarElement = document.getElementById('calendar');
+    
+    // Error messages
+    const firstNameError = document.getElementById('firstName-error');
+    const lastNameError = document.getElementById('lastName-error');
+    const emailError = document.getElementById('email-error');
+    const phoneError = document.getElementById('phone-error');
+    const messageError = document.getElementById('message-error');
+    const dateError = document.getElementById('date-error');
+    const timeError = document.getElementById('time-error');
+    
+    // Calendar elements
+    const calendarTitle = document.getElementById('calendar-title');
+    const calendarDays = document.getElementById('calendar-days');
+    const prevMonthBtn = document.getElementById('prev-month');
+    const nextMonthBtn = document.getElementById('next-month');
+    
+    // Calendar variables
+    let currentDate = new Date();
+    let selectedDate = null;
+    
+    // Fonction pour charger les créneaux réservés depuis localStorage
+    function loadBookedSlots() {
+      const bookedSlots = localStorage.getItem('bookedSlots');
+      return bookedSlots ? JSON.parse(bookedSlots) : {};
+    }
+    
+    // Fonction pour sauvegarder un créneau réservé
+    function saveBookedSlot(date, time) {
+      const bookedSlots = loadBookedSlots();
+      
+      if (!bookedSlots[date]) {
+        bookedSlots[date] = [];
+      }
+      
+      if (!bookedSlots[date].includes(time)) {
+        bookedSlots[date].push(time);
+      }
+      
+      localStorage.setItem('bookedSlots', JSON.stringify(bookedSlots));
+    }
+    
+    // Fonction pour vérifier si un créneau est disponible
+    function isSlotAvailable(date, time) {
+      const bookedSlots = loadBookedSlots();
+      const dateStr = date.toISOString().split('T')[0];
+      
+      return !(bookedSlots[dateStr] && bookedSlots[dateStr].includes(time));
+    }
+    
+    // Fonction pour mettre à jour les créneaux horaires disponibles
+    function updateAvailableTimeSlots() {
+      if (!selectedDate) return;
+      
+      const dateStr = selectedDate.toISOString().split('T')[0];
+      const timeOptions = timeSelect.querySelectorAll('option');
+      
+      // Réinitialiser toutes les options
+      timeSelect.value = '';
+      
+      // Parcourir toutes les options (sauf la première qui est "Choisir un créneau")
+      for (let i = 1; i < timeOptions.length; i++) {
+        const option = timeOptions[i];
+        const timeValue = option.value;
+        
+        if (!isSlotAvailable(selectedDate, timeValue)) {
+          option.disabled = true;
+          option.textContent = `${timeValue} (Indisponible)`;
+        } else {
+          option.disabled = false;
+          option.textContent = timeValue;
+        }
+      }
+    }
+    
+    // Fonction pour envoyer un email de confirmation
+    function sendConfirmationEmail(formData) {
+      // Formatage de la date pour l'affichage
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = formData.date.toLocaleDateString('fr-FR', options);
+      
+      // Préparation des paramètres pour EmailJS
+      const templateParams = {
+        to_name: `${formData.firstName} ${formData.lastName}`,
+        to_email: formData.email,
+        from_name: "TERRA Expertise",
+        appointment_date: formattedDate,
+        appointment_time: formData.time,
+        message: formData.message,
+        phone: formData.phone
+      };
+      
+      // Envoi de l'email via EmailJS
+      // Remplacez "YOUR_SERVICE_ID" et "YOUR_TEMPLATE_ID" par vos identifiants EmailJS
+      return emailjs.send("service_mail", "confirmation_rdv", templateParams);
+    }
+    
+    // Initialize calendar
+    function initCalendar() {
+      updateCalendar();
+      
+      prevMonthBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateCalendar();
+      });
+      
+      nextMonthBtn.addEventListener('click', () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateCalendar();
+      });
+    }
+    
+    // Update calendar display
+    function updateCalendar() {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      
+      // Set calendar title
+      const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+      calendarTitle.textContent = `${monthNames[month]} ${year}`;
+      
+      // Clear calendar days
+      calendarDays.innerHTML = '';
+      
+      // Get first day of month and number of days
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      
+      // Get day of week for first day (0 = Sunday, 1 = Monday, etc.)
+      let firstDayOfWeek = firstDay.getDay();
+      // Adjust for Monday as first day of week
+      firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+      
+      // Add empty cells for days before first day of month
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day';
+        calendarDays.appendChild(emptyDay);
+      }
+      
+      // Add days of month
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = day;
+        
+        // Check if weekend
+        const dayOfWeek = date.getDay();
+        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+        
+        // Check if past date
+        const isPastDate = date < today;
+        
+        // Disable weekends and past dates
+        if (isWeekend || isPastDate) {
+          dayElement.classList.add('disabled');
+        } else {
+          dayElement.addEventListener('click', () => {
+            // Remove selected class from previously selected date
+            const selectedDays = document.querySelectorAll('.calendar-day.selected');
+            selectedDays.forEach(day => day.classList.remove('selected'));
+            
+            // Add selected class to clicked date
+            dayElement.classList.add('selected');
+            
+            // Store selected date
+            selectedDate = new Date(year, month, day);
+            
+            // Clear date error if exists
+            dateError.textContent = '';
+            calendarElement.classList.remove('input-error');
+            
+            // Mettre à jour les créneaux horaires disponibles
+            updateAvailableTimeSlots();
+          });
+        }
+        
+        // Highlight today
+        if (date.getTime() === today.getTime()) {
+          dayElement.classList.add('today');
+        }
+        
+        // Highlight selected date
+        if (selectedDate && date.getTime() === selectedDate.getTime()) {
+          dayElement.classList.add('selected');
+        }
+        
+        calendarDays.appendChild(dayElement);
+      }
+    }
+    
+    // Form validation
+    function validateForm() {
+      let isValid = true;
+      
+      // Reset error messages
+      firstNameError.textContent = '';
+      lastNameError.textContent = '';
+      emailError.textContent = '';
+      phoneError.textContent = '';
+      messageError.textContent = '';
+      dateError.textContent = '';
+      timeError.textContent = '';
+      
+      // Remove error classes
+      firstNameInput.classList.remove('input-error');
+      lastNameInput.classList.remove('input-error');
+      emailInput.classList.remove('input-error');
+      phoneInput.classList.remove('input-error');
+      messageInput.classList.remove('input-error');
+      calendarElement.classList.remove('input-error');
+      timeSelect.classList.remove('input-error');
+      
+      // Validate first name
+      if (!firstNameInput.value.trim()) {
+        firstNameError.textContent = 'Le prénom est requis';
+        firstNameInput.classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validate last name
+      if (!lastNameInput.value.trim()) {
+        lastNameError.textContent = 'Le nom est requis';
+        lastNameInput.classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validate email
+      if (!emailInput.value.trim()) {
+        emailError.textContent = "L'email est requis";
+        emailInput.classList.add('input-error');
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(emailInput.value)) {
+        emailError.textContent = "Format d'email invalide";
+        emailInput.classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validate phone
+      if (!phoneInput.value.trim()) {
+        phoneError.textContent = 'Le numéro de téléphone est requis';
+        phoneInput.classList.add('input-error');
+        isValid = false;
+      } else if (!/^[0-9]{10}$/.test(phoneInput.value.replace(/\s/g, ''))) {
+        phoneError.textContent = 'Format de téléphone invalide';
+        phoneInput.classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validate message/description
+      if (!messageInput.value.trim()) {
+        messageError.textContent = 'La description est requise';
+        messageInput.classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validate date
+      if (!selectedDate) {
+        dateError.textContent = 'Veuillez sélectionner une date';
+        calendarElement.classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Validate time
+      if (!timeSelect.value) {
+        timeError.textContent = 'Veuillez sélectionner une heure';
+        timeSelect.classList.add('input-error');
+        isValid = false;
+      }
+      
+      // Vérifier si le créneau est toujours disponible
+      if (selectedDate && timeSelect.value && !isSlotAvailable(selectedDate, timeSelect.value)) {
+        timeError.textContent = 'Ce créneau n\'est plus disponible, veuillez en choisir un autre';
+        timeSelect.classList.add('input-error');
+        isValid = false;
+        
+        // Mettre à jour les créneaux disponibles
+        updateAvailableTimeSlots();
+      }
+      
+      return isValid;
+    }
+    
+    // Form submission
+    appointmentForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (validateForm()) {
+        // Récupérer les données du formulaire
+        const formData = {
+          firstName: firstNameInput.value,
+          lastName: lastNameInput.value,
+          email: emailInput.value,
+          phone: phoneInput.value,
+          message: messageInput.value,
+          date: selectedDate,
+          time: timeSelect.value
+        };
+        
+        // Vérifier une dernière fois si le créneau est disponible
+        if (!isSlotAvailable(selectedDate, timeSelect.value)) {
+          timeError.textContent = 'Ce créneau vient d\'être réservé, veuillez en choisir un autre';
+          timeSelect.classList.add('input-error');
+          updateAvailableTimeSlots();
+          return;
+        }
+        
+        // Sauvegarder le créneau comme réservé
+        const dateStr = selectedDate.toISOString().split('T')[0];
+        saveBookedSlot(dateStr, timeSelect.value);
+        
+        // Envoyer l'email de confirmation
+        sendConfirmationEmail(formData)
+          .then(() => {
+            // Format date for display
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = selectedDate.toLocaleDateString('fr-FR', options);
+            
+            // Update confirmation message
+            confirmationDetails.textContent = `Nous avons bien reçu votre demande de rendez-vous pour le ${formattedDate} à ${timeSelect.value}. Un email de confirmation a été envoyé à ${emailInput.value}.`;
+            
+            // Hide form and show success message
+            bookingForm.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+            
+            console.log('Rendez-vous confirmé et email envoyé:', formData);
+          })
+          .catch(error => {
+            console.error('Erreur lors de l\'envoi de l\'email:', error);
+            alert('Une erreur est survenue lors de l\'envoi de l\'email de confirmation. Veuillez réessayer.');
+          });
+      }
+    });
+    
+    // New appointment button
+    newAppointmentBtn.addEventListener('click', function() {
+      // Reset form
+      appointmentForm.reset();
+      selectedDate = null;
+      
+      // Remove selected date in calendar
+      const selectedDays = document.querySelectorAll('.calendar-day.selected');
+      selectedDays.forEach(day => day.classList.remove('selected'));
+      
+      // Show form and hide success message
+      successMessage.classList.add('hidden');
+      bookingForm.classList.remove('hidden');
+    });
+    
+    // Initialize
+    initCalendar(); 
+    
+    // Ajout d'événements pour effacer les erreurs lors de la saisie
+    firstNameInput.addEventListener('input', function() {
+      firstNameInput.classList.remove('input-error');
+      firstNameError.textContent = '';
+    });
+    
+    lastNameInput.addEventListener('input', function() {
+      lastNameInput.classList.remove('input-error');
+      lastNameError.textContent = '';
+    });
+    
+    emailInput.addEventListener('input', function() {
+      emailInput.classList.remove('input-error');
+      emailError.textContent = '';
+    });
+    
+    phoneInput.addEventListener('input', function() {
+      phoneInput.classList.remove('input-error');
+      phoneError.textContent = '';
+    });
+    
+    messageInput.addEventListener('input', function() {
+      messageInput.classList.remove('input-error');
+      messageError.textContent = '';
+    });
+    
+    timeSelect.addEventListener('change', function() {
+      timeSelect.classList.remove('input-error');
+      timeError.textContent = '';
+    });
+ </script>
+</body>
+</html>

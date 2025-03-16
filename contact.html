@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - TERRA</title>
+    <meta name="description" content="Contactez TERRA pour discuter de vos projets et découvrir comment nous pouvons vous accompagner dans votre démarche RSE.">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="js/script.js"></script>
+    <script src="js/terra-chatbot.js"></script>
+    <script src="js/terra-chatbot-loader.js"></script>
+
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">TERRA</a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="a_propos.html">À propos</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="cas.html">Cas d'usage</a></li>
+                        <li><a href="contact.html" class="active btn btn-primary">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Contactez-nous</h1>
+            <p>
+                Discutons de vos projets et de comment TERRA peut vous accompagner dans votre démarche RSE.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-form-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Envoyez-nous un message</h2>
+                            <p>
+                                Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <form id="contact-form" class="contact-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="first-name">Prénom</label>
+                                        <input type="text" id="first-name" name="first-name" placeholder="Jean" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last-name">Nom</label>
+                                        <input type="text" id="last-name" name="last-name" placeholder="Dupont" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="jean.dupont@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="organization">Organisation</label>
+                                    <input type="text" id="organization" name="organization" placeholder="Nom de votre collectivité" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject">Sujet</label>
+                                    <select id="subject" name="subject" required>
+                                        <option value="" disabled selected>Sélectionnez un sujet</option>
+                                        <option value="general">Renseignement général</option>
+                                        <option value="project">Projet spécifique</option>
+                                        <option value="partnership">Partenariat</option>
+                                        <option value="other">Autre</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea id="message" name="message" placeholder="Décrivez votre projet ou votre demande..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="fas fa-paper-plane"></i> Envoyer le message
+                                </button>
+                            </form>
+                            <div id="form-success" class="form-success hidden">
+                                <div class="success-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <h3>Message envoyé !</h3>
+                                <p>
+                                    Merci pour votre message. Notre équipe vous contactera très prochainement.
+                                </p>
+                                <button id="send-another" class="btn btn-outline">
+                                    Envoyer un autre message
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <div class="info-section">
+                        <h2>Nos coordonnées</h2>
+                        <p>
+                            N'hésitez pas à nous contacter directement par téléphone ou par email,
+                            ou à venir nous rencontrer dans nos bureaux.
+                        </p>
+                        <ul class="contact-details">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h3>Adresse</h3>
+                                    <p>123 Avenue des Territoires, 75000 Paris</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h3>Email</h3>
+                                    <a href="mailto:contact@terra-expertise.fr">contact@terra-expertise.fr</a>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h3>Téléphone</h3>
+                                    <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h2>Horaires d'ouverture</h2>
+                        <ul class="opening-hours">
+                            <li>
+                                <span>Lundi - Vendredi</span>
+                                <span>9h00 - 18h00</span>
+                            </li>
+                            <li>
+                                <span>Samedi - Dimanche</span>
+                                <span>Fermé</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h2>Besoin d'une réponse rapide ?</h2>
+                        <p>
+                            Pour toute demande urgente, n'hésitez pas à nous appeler directement.
+                            Notre équipe est disponible pour vous répondre rapidement.
+                        </p>
+                        <a href="tel:+33123456789" class="btn btn-outline btn-block">
+                            <i class="fas fa-phone"></i> Appelez-nous maintenant
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map">
+        <div class="container">
+            <h2>Nous trouver</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps?q=IFIS,+6-8+Cr+du+Danube,+77700+Serris&output=embed" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terra Chatbot Integration -->
+    <div id="terra-chatbot-container">
+        <link rel="stylesheet" href="styles/terra-chatbot.css">
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new TerraChatbot('terra-chatbot-container');
+            });
+        </script>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        <a href="index.html"> TERRA <img src="image/logo.png" alt="Logo TERRA" class="logo-img"></a>
+                    </div>
+                    <p>Vos territoires, notre expertise, nos actions responsables</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="a_propos.html">À propos</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="cas.html">Cas d'usage</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="services.html#analyse">Analyse & Conseil</a></li>
+                        <li><a href="services.html#lancement">Lancement de Projet</a></li>
+                        <li><a href="services.html#execution">Équipe d'Exécution</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Paris, France</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:contact@terra-expertise.fr">contact@terra-expertise.fr</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> TERRA. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
